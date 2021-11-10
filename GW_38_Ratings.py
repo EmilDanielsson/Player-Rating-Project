@@ -52,21 +52,21 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 # with open('Json_files/KPI_per_90_All.json') as f:
 #     data_kpi = json.load(f)
     
-with open('Json_files/KPI_tot_All_v2.json') as f:
+with open('../Json_files/KPI_tot_All_v2.json') as f:
     data_kpi = json.load(f)
     
 df_KPI = pd.DataFrame(data_kpi)
 
 
 # Create match dataframes
-df_England_matches = pd.read_json('../Wyscout/matches/matches_England.json', encoding="unicode_escape")
+df_England_matches = pd.read_json('../../Wyscout/matches/matches_England.json', encoding="unicode_escape")
 
 
 #%%
 # - Read in minutes played data
 "---------------------------------------------------------------------------"
 
-with open('Json_files/minutes_played_All.json') as f:
+with open('../Json_files/minutes_played_All.json') as f:
     data_minutes = json.load(f)
     
 df_minutes = pd.DataFrame(data_minutes)

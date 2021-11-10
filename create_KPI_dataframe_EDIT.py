@@ -37,26 +37,26 @@ import KPI_functions as kpi
 
 # Create event dataframe
 #df_Europe_events = pd.read_json('Json_files/events_All.json', encoding="unicode_escape") #SLOWER
-with open('Json_files/events_All.json') as f:
+with open('../Json_files/events_All.json') as f:
     data_Europe = json.load(f)
     
 df_Europe_events = pd.DataFrame(data_Europe)
 
 # Create match dataframes
-df_England_matches = pd.read_json('../Wyscout/matches/matches_England.json', encoding="unicode_escape")
+df_England_matches = pd.read_json('../../Wyscout/matches/matches_England.json', encoding="unicode_escape")
 
-df_France_matches = pd.read_json('../Wyscout/matches/matches_France.json', encoding="unicode_escape")
+df_France_matches = pd.read_json('../../Wyscout/matches/matches_France.json', encoding="unicode_escape")
 
-df_Germany_matches = pd.read_json('../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
+df_Germany_matches = pd.read_json('../../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
 
-df_Italy_matches = pd.read_json('../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
+df_Italy_matches = pd.read_json('../../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
 
-df_Spain_matches = pd.read_json('../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
+df_Spain_matches = pd.read_json('../../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
 
 
 # Create players and teams dataframes
-df_players = pd.read_json("../Wyscout/players.json", encoding="unicode_escape")
-df_teams = pd.read_json("../Wyscout/teams.json", encoding="unicode_escape")
+df_players = pd.read_json("../../Wyscout/players.json", encoding="unicode_escape")
+df_teams = pd.read_json("../../Wyscout/teams.json", encoding="unicode_escape")
 
 
 
@@ -75,7 +75,7 @@ df_Europe_matches = pd.concat(frames_matches, keys = ["England", "France",
 # - Read in minutes played data
 "---------------------------------------------------------------------------"
 
-with open('Json_files/minutes_played_All.json') as f:
+with open('../Json_files/minutes_played_All.json') as f:
     data_minutes = json.load(f)
     
 df_minutes = pd.DataFrame(data_minutes)
@@ -85,10 +85,10 @@ df_minutes = pd.DataFrame(data_minutes)
 # - Read in dataframes of all KPI's to edit
 "---------------------------------------------------------------------------"
 
-with open('Json_files/new_KPI_tot_All.json') as f:
+with open('../Json_files/new_KPI_tot_All.json') as f:
     data_kpi_tot = json.load(f)
     
-with open('Json_files/new_KPI_per_90_All.json') as f:
+with open('../Json_files/new_KPI_per_90_All.json') as f:
     data_kpi_p90 = json.load(f)
     
 # with open('Json_files/KPI_info_All.json') as f:

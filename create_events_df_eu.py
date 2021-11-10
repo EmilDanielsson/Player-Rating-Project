@@ -31,32 +31,32 @@ import fitting_functions as ff
 "---------------------------------------------------------------------------"
 
 # Create event dataframes
-df_England_events = pd.read_json('../Wyscout/events/events_England.json', encoding="unicode_escape")
+df_England_events = pd.read_json('../../Wyscout/events/events_England.json', encoding="unicode_escape")
 
-df_France_events = pd.read_json('../Wyscout/events/events_France.json', encoding="unicode_escape")
+df_France_events = pd.read_json('../../Wyscout/events/events_France.json', encoding="unicode_escape")
 
-df_Germany_events = pd.read_json('../Wyscout/events/events_Germany.json', encoding="unicode_escape")
+df_Germany_events = pd.read_json('../../Wyscout/events/events_Germany.json', encoding="unicode_escape")
 
-df_Italy_events = pd.read_json('../Wyscout/events/events_Italy.json', encoding="unicode_escape")
+df_Italy_events = pd.read_json('../../Wyscout/events/events_Italy.json', encoding="unicode_escape")
 
-df_Spain_events = pd.read_json('../Wyscout/events/events_Spain.json', encoding="unicode_escape")
+df_Spain_events = pd.read_json('../../Wyscout/events/events_Spain.json', encoding="unicode_escape")
 
 
 # Create match dataframes
-df_England_matches = pd.read_json('../Wyscout/matches/matches_England.json', encoding="unicode_escape")
+df_England_matches = pd.read_json('../../Wyscout/matches/matches_England.json', encoding="unicode_escape")
 
-df_France_matches = pd.read_json('../Wyscout/matches/matches_France.json', encoding="unicode_escape")
+df_France_matches = pd.read_json('../../Wyscout/matches/matches_France.json', encoding="unicode_escape")
 
-df_Germany_matches = pd.read_json('../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
+df_Germany_matches = pd.read_json('../../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
 
-df_Italy_matches = pd.read_json('../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
+df_Italy_matches = pd.read_json('../../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
 
-df_Spain_matches = pd.read_json('../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
+df_Spain_matches = pd.read_json('../../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
 
 
 # Create players and teams dataframes
-df_players = pd.read_json("../Wyscout/players.json", encoding="unicode_escape")
-df_teams = pd.read_json("../Wyscout/teams.json", encoding="unicode_escape")
+df_players = pd.read_json("../../Wyscout/players.json", encoding="unicode_escape")
+df_teams = pd.read_json("../../Wyscout/teams.json", encoding="unicode_escape")
 
 
 

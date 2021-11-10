@@ -69,21 +69,21 @@ serif_bold = FontManager(URL3)
 # with open('Json_files/KPI_per_90_All.json') as f:
 #     data_kpi = json.load(f)
     
-with open('Json_files/KPI_tot_All_v2.json') as f:
+with open('../Json_files/KPI_tot_All_v2.json') as f:
     data_kpi = json.load(f)
     
 df_KPI = pd.DataFrame(data_kpi)
 
 
 # Create match dataframes
-df_England_matches = pd.read_json('../Wyscout/matches/matches_England.json', encoding="unicode_escape")
+df_England_matches = pd.read_json('../../Wyscout/matches/matches_England.json', encoding="unicode_escape")
 
 
 #%%
 # - Read in minutes played data
 "---------------------------------------------------------------------------"
 
-with open('Json_files/minutes_played_All.json') as f:
+with open('../Json_files/minutes_played_All.json') as f:
     data_minutes = json.load(f)
     
 df_minutes = pd.DataFrame(data_minutes)
@@ -94,18 +94,18 @@ df_minutes = pd.DataFrame(data_minutes)
 "---------------------------------------------------------------------------"
 
 # Create event dataframe for PL
-df_events = pd.read_json('Json_files/events_All.json', encoding="unicode_escape")
+df_events = pd.read_json('../Json_files/events_All.json', encoding="unicode_escape")
 
 # Create players and teams dataframes
-df_players = pd.read_json("../Wyscout/players.json", encoding="unicode_escape")
-df_teams = pd.read_json("../Wyscout/teams.json", encoding="unicode_escape")
+df_players = pd.read_json("../../Wyscout/players.json", encoding="unicode_escape")
+df_teams = pd.read_json("../../Wyscout/teams.json", encoding="unicode_escape")
 
 
 #%%
 # - Read in data for xG-model and get the coeficients dataframes
 "---------------------------------------------------------------------------"  
 
-with open('Json_files/xG_model_v2_All_except_Eng.json') as f:
+with open('../Json_files/xG_model_v2_All_except_Eng.json') as f:
     data_xG_model = json.load(f)
 
 # Create dataframes
