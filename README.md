@@ -3,7 +3,7 @@
 
 Instruction of how to run the files, and what needs to be downloaded beforehand, for the Player_Rating_Project. Project has been carried out at Uppsala university for the course "Advanced Course on Topics in Scientific Computing I", HT2021 period 1.
 
-Python Packages needed
+Python Packages Needed
 ------------
 - `pandas`
 - `numpy`
@@ -27,7 +27,7 @@ Place the downloaded Wyscout data in a folder named: `Wyscout`, placed two level
 
 Also download Excel-sheet `Gameweek_38.xlsx` from XXXXXXXX and place at one level above the Python code (see below).
 
-Getting Started
+Running Instructions
 ------------
 
 
