@@ -6,11 +6,8 @@ Created on Mon Sep 13 16:54:33 2021
 @author: emildanielsson & JakobEP
 
 Program description: 
-    1. Read in data
-    2. Creates two dataframes; 
-        df_KPI      - Dataframe of all the player's KPI's from each game
-        df_KPI_info - Dataframe with info of player's KPI's 
-    (3.) Create and store the two dataframes as json-files in working directory
+    Edit KPI-dtaframes created from create_KPI_dataframe.py
+    Writes over changes to the same file
     
 """
 
@@ -253,11 +250,12 @@ for match in list_matches:
 
 
 #%%
-# - Save dataframes to json-files, uncomment which to save
+# - Save dataframes to json-files
+# - Note: Uncomment which to save
 "---------------------------------------------------------------------------" 
 
-df_KPI_p90.to_json("Json_files/KPI_per_90_All.json")
-df_KPI_tot.to_json("Json_files/KPI_tot_All.json")
+#df_KPI_p90.to_json("../Json_files/KPI_per_90_All.json")
+#df_KPI_tot.to_json("Json_files/KPI_tot_All.json")
 #df_KPI_info.to_json("Json_files/new_KPI_info_All.json")
 
         

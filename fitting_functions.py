@@ -57,16 +57,23 @@ serif_bold = FontManager(URL3)
 # - Functions
 "---------------------------------------------------------------------------" 
 
-""" Function which 
+""" Function which takes in dataframe of shots and outputs 
+    dataframes which contains information about the logistic
+    regression models for the different shot-types. 
 
 Description: 
+    
+    Regression model variables:
+
+        Dependent variable: Goal
+        Independent variables: Angle, Distance, Distance squared 
     
     Input:
            df_xG_model - dataframe for all shots, headers, freekicks, penalties
            and their tags (go/no goal)
         
     Output: 
-            dataframe for all coefficients and fitted log models
+            dataframes for all coefficients and fitted log models
         
 """
 def xG_model(df_xG_model):
@@ -202,7 +209,7 @@ def xG_model(df_xG_model):
     df_log_model_free_kicks_coef.loc['intercept'] = log_model_free_kicks.intercept_[0]
     print(df_log_model_free_kicks_coef)
     
-    return df_log_model_shots_coef, df_log_model_free_kicks_coef, df_log_model_free_kicks_coef, log_model, log_model_headers, log_model_free_kicks
+    return df_log_model_shots_coef, df_log_model_headers_coef, df_log_model_free_kicks_coef, log_model, log_model_headers, log_model_free_kicks
 
 
 
@@ -240,7 +247,31 @@ def decide_position(x, y, position):
 
 
 
-"""
+""" Function which does linear regression fitting of KPI against 
+    dep_var (team_xG or opponent_xG) for a given position.
+    Iteratively removes one independent vaiable at a time that is
+     concidered statistically insignificant (p-value > 0.05). 
+
+    Description: 
+    
+    Regression model variables:
+
+        Dependent variable: dep_var (team_xG or opponent_xG)
+        Independent variables: KPI values
+    
+    Input:
+        KPI_train - dataframe of KPIs that can be used as training data
+        scaler - chosen scaler method for the normalization of KPIs
+        list_kpi - list of KPIs used for training data
+        dep_var -  model dependent variable
+        position - position to find model for
+        min_minutes - minimum minutes played for a player in a match
+            to be included in the regression model training data. 
+        
+    Output: 
+            model_coef - linear regression model coefficients 
+            r_squared - resulting r-squared of the model
+            list_kpi_fitting - list of statistically significant KPIs
 
 """
 def KPI_fitting(KPI_train, scaler, list_kpi, dep_var, position, min_minutes):

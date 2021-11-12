@@ -11,6 +11,10 @@ Program description:
         df_KPI      - Dataframe of all the player's KPI's from each game
         df_KPI_info - Dataframe with info of player's KPI's 
     (3.) Create and store the two dataframes as json-files in the working directory
+
+    Note that this code takes very long time to run and therefore some other KPIs 
+    which were develoloped later have been added by the program: create_KPI_dataframe_EDIT.
+    This is recomended for future use. 
     
 """
 
@@ -81,7 +85,7 @@ df_minutes = pd.DataFrame(data_minutes)
 
 
 #%%
-# - Read in data for xG-model
+# - Read in data for xG-model and get the coeficients dataframes
 "---------------------------------------------------------------------------"  
 
 with open('../Json_files/xG_model_v2_All_except_Eng.json') as f:
@@ -90,137 +94,8 @@ with open('../Json_files/xG_model_v2_All_except_Eng.json') as f:
 # Create dataframes
 df_xG_model = pd.DataFrame(data_xG_model)  
 
-
-#%%
-# - Filter out headers and freekicks
-"---------------------------------------------------------------------------"
-
-mask_headers = df_xG_model.header == 1
-mask_free_kicks = df_xG_model.free_kick == 1
-
-df_xG_shots = df_xG_model[(~mask_headers) & (~mask_free_kicks)]
-df_xG_headers = df_xG_model[mask_headers]
-df_xG_free_kicks = df_xG_model[mask_free_kicks]
-
-
-#%%
-# - Split data into test and training sets, 
-#   looking at distance (dist) and angle (ang) in radians. xG-shots.
-"---------------------------------------------------------------------------"
-
-df_trainSet = df_xG_shots[['goal', 'distance', 'angle_rad']].copy()
-
-# Adding distance squared to df
-squaredD = df_trainSet['distance']**2
-df_trainSet = df_trainSet.assign(distance_sq = squaredD)
-
-# y(x) where y = shot result, x1 = distance, x2 = angle
-x_train, x_test, y_train, y_test = train_test_split(df_trainSet.drop('goal', axis=1), 
-                                                    df_trainSet['goal'], test_size=0.20, 
-                                                    random_state=10)
-
-
-#%%
-# - Create logistic model and fit it to data. xG-shots.
-"---------------------------------------------------------------------------"
-
-# Create instance
-log_model = LogisticRegression()
-
-# Fit model with training data
-log_model.fit(x_train, y_train)
-
-# Read out coefficent(s) into df
-log_model_coef = log_model.coef_[0]
-
-# Create df of fit
-df_log_model_coef = pd.DataFrame(log_model_coef, 
-             x_train.columns, 
-             columns=['coef']).sort_values(by='coef', ascending=False)
-
-# Add to df
-df_log_model_coef.loc['intercept'] = log_model.intercept_[0]
-print(df_log_model_coef)
-
-
-#%%
-# - Split data into test and training sets, 
-#   looking at distance (dist) and angle (ang) in radians. xG-headers.
-"---------------------------------------------------------------------------"
-
-df_trainSet_headers = df_xG_headers[['goal', 'distance', 'angle_rad']].copy()
-
-# Adding distance squared to df
-squaredD = df_trainSet_headers['distance']**2
-df_trainSet_headers = df_trainSet_headers.assign(distance_sq = squaredD)
-
-# y(x) where y = shot result, x1 = distance, x2 = angle
-x_train_h, x_test_h, y_train_h, y_test_h = train_test_split(df_trainSet_headers.drop('goal', axis=1), 
-                                                    df_trainSet_headers['goal'], test_size=0.20, 
-                                                    random_state=10)
-
-
-#%%
-# - Create logistic model and fit it to data. xG-headers.
-"---------------------------------------------------------------------------"
-
-# Create instance
-log_model_headers = LogisticRegression()
-
-# Fit model with training data
-log_model_headers.fit(x_train_h, y_train_h)
-
-# Read out coefficent(s) into df
-log_model_headers_coef = log_model_headers.coef_[0]
-
-# Create df of fit
-df_log_model_headers_coef = pd.DataFrame(log_model_headers_coef, 
-             x_train_h.columns, 
-             columns=['coef']).sort_values(by='coef', ascending=False)
-
-# Add to df
-df_log_model_headers_coef.loc['intercept'] = log_model_headers.intercept_[0]
-print(df_log_model_headers_coef)
-
-
-#%%
-# - Split data into test and training sets, 
-#   looking at distance (dist) and angle (ang) in radians. xG-free-kicks.
-"---------------------------------------------------------------------------"
-
-df_trainSet_free_kicks = df_xG_free_kicks[['goal', 'distance', 'angle_rad']].copy()
-
-# Adding distance squared to df
-squaredD = df_trainSet_free_kicks['distance']**2
-df_trainSet_free_kicks = df_trainSet_free_kicks.assign(distance_sq = squaredD)
-
-# y(x) where y = shot result, x1 = distance, x2 = angle
-x_train_f, x_test_f, y_train_f, y_test_f = train_test_split(df_trainSet_free_kicks.drop('goal', axis=1), 
-                                                    df_trainSet_free_kicks['goal'], test_size=0.20, 
-                                                    random_state=10)
-
-
-#%%
-# - Create logistic model and fit it to data. xG-free-kicks.
-"---------------------------------------------------------------------------"
-
-# Create instance
-log_model_free_kicks = LogisticRegression()
-
-# Fit model with training data
-log_model_free_kicks.fit(x_train_f, y_train_f)
-
-# Read out coefficent(s) into df
-log_model_free_kicks_coef = log_model_free_kicks.coef_[0]
-
-# Create df of fit
-df_log_model_free_kicks_coef = pd.DataFrame(log_model_free_kicks_coef, 
-             x_train_f.columns, 
-             columns=['coef']).sort_values(by='coef', ascending=False)
-
-# Add to df
-df_log_model_free_kicks_coef.loc['intercept'] = log_model_free_kicks.intercept_[0]
-print(df_log_model_free_kicks_coef)
+# Call xG-m
+df_log_model_shots_coef, df_log_model_headers_coef, df_log_model_free_kicks_coef, log_model, log_model_headers, log_model_free_kicks = ff.xG_model(df_xG_model)
 
 
 #%%
@@ -496,7 +371,7 @@ for i, match in df_Europe_matches.iterrows():
             progressive_carries, progressive_carries_p90, progressive_carries_info = kpi.progressive_carries(df_events_player, player_minutes) 
             
             # xG
-            xG_tot, xG_tot_p90, xG_info, xG_shots, xG_headers, xG_free_kicks, xG_penalties = kpi.xG(df_events_player, player_minutes, df_log_model_coef, df_log_model_headers_coef, df_log_model_free_kicks_coef)
+            xG_tot, xG_tot_p90, xG_info, xG_shots, xG_headers, xG_free_kicks, xG_penalties = kpi.xG(df_events_player, player_minutes, df_log_model_shots_coef, df_log_model_headers_coef, df_log_model_free_kicks_coef)
             
             
             

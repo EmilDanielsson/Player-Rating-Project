@@ -112,7 +112,7 @@ with open('../Json_files/xG_model_v2_All_except_Eng.json') as f:
 df_xG_model = pd.DataFrame(data_xG_model)  
 
 # Call xG-m
-df_log_model_shots_coef, df_log_model_headers_coef, df_log_model_free_kicks_coef = ff.xG_model(df_xG_model)
+df_log_model_shots_coef, df_log_model_headers_coef, df_log_model_free_kicks_coef, log_model, log_model_headers, log_model_free_kicks = ff.xG_model(df_xG_model)
 
 
 #%%
