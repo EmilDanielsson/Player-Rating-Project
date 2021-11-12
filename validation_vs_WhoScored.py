@@ -27,7 +27,7 @@ import json
 "---------------------------------------------------------------------------"
 
 # Specify the path to the xlsx-file
-excel_path = "Gameweek_38.xlsx"
+excel_path = "../Gameweek_38.xlsx"
 
 df_WhoScored = pd.read_excel(open(excel_path, 'rb'),
               sheet_name='WhoScored')  
@@ -128,7 +128,7 @@ for position in positions:
 # - Write validation results to Excel document
 "---------------------------------------------------------------------------"
 
-# with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
+# with pd.ExcelWriter("../Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
 #     df_validation.to_excel(writer, sheet_name="WhoScored_Validation",
 #                             columns=['shortName', 'Position', 'teamName', 'WhoScored', 'pre_tune', 'pre_tune'],
 #                     header=True, index=False)
