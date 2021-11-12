@@ -15,9 +15,20 @@ Python Packages needed
 - `statsmodels`
 - `tabulate`
 
-Getting Started
+Downloads
 ------------
 Make sure to have Python3 downloaded, along with needed packages listed above.
+
+Get the Wyscout data from: https://figshare.com/collections/Soccer_match_event_dataset/4415000/2 
+The following data sets from Wyscout are needed: events, matches, players, teams.
+
+Place the downloaded Wyscout data in a folder named: `Wyscout`, placed one level above the Python code.
+
+Also download Excel-sheet `Gameweek_38.xlsx` from XXXXXXXX and place at the same dictionary level as the Wyscout-folder.
+
+Getting Started
+------------
+
 
 Change the name of folder that contains this whole repo: `python-project-template` -> `{your project name}`  
 
