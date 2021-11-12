@@ -276,7 +276,7 @@ for position in positions_fitting:
         # Find the fitted opponent xG (xGC)
         xGC_fitting_rating_def = ff.compute_fitting_ratings(player, model_coef_def, list_kpi_def_fitting)
         
-        # Multiply the fitted value with r_squared, how good the fit was
+        # Multiply the fitted value with r_squared, how good the fit was 
         xGC_fitting_rating_def = xGC_fitting_rating_def * r_squared_def
         
         # Add to df
@@ -290,7 +290,7 @@ for position in positions_fitting:
         match_event_rating = ff.compute_events_rating(player, position, df_KPI)
         df_ratings.loc[i, 'match_events_rating'] = match_event_rating
         
-        # Sum fitting rating and add to dataframe
+        # Sum fitting rating and add to dataframe (regression-based rating)
         tot_fit_rating = xG_fitting_rating_off - xGC_fitting_rating_def
         df_ratings.loc[i, 'tot_fit_rating'] = tot_fit_rating
         
@@ -376,7 +376,7 @@ for position in positions_fitting:
 
 
 #%%
-# Check the mean rating from gameweek 1-37
+# Check the mean and sum rating from gameweek 1-37
 df_mean_rating = df_final_rating2.groupby(['shortName', 'teamName'], as_index=False)["final_rating"].mean()
 df_sum_rating = df_final_rating2.groupby(['shortName'], as_index=False)["final_rating"].sum()
 

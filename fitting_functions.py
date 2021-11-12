@@ -211,6 +211,9 @@ def xG_model(df_xG_model):
     
     return df_log_model_shots_coef, df_log_model_headers_coef, df_log_model_free_kicks_coef, log_model, log_model_headers, log_model_free_kicks
 
+# - End function
+#############################################################################
+
 
 
 """ Function to determine the position of a player.
@@ -244,6 +247,9 @@ def decide_position(x, y, position):
         return "GK"
     else:
         return "?"
+
+# - End function
+#############################################################################
 
 
 
@@ -284,7 +290,7 @@ def KPI_fitting(KPI_train, scaler, list_kpi, dep_var, position, min_minutes):
     ################################################
     # - Filter the training data
     "----------------------------------------------"
-    df_train_filtered = pf.filter_dataframe(KPI_train, position, list_kpi_fitting, min_minutes, 1)
+    df_train_filtered = filter_dataframe(KPI_train, position, list_kpi_fitting, min_minutes, 1)
     
     # Normalise
     df_train_filtered[list_kpi_fitting[:-1]] = scaler.fit_transform(df_train_filtered[list_kpi_fitting[:-1]])  
@@ -318,7 +324,7 @@ def KPI_fitting(KPI_train, scaler, list_kpi, dep_var, position, min_minutes):
         list_kpi_fitting.remove(highest_kpi)
         
         # Filter the data
-        df_train_filtered = pf.filter_dataframe(KPI_train, position, list_kpi_fitting, min_minutes, 1)
+        df_train_filtered = filter_dataframe(KPI_train, position, list_kpi_fitting, min_minutes, 1)
         
         # Normalise the new frame
         df_train_filtered[list_kpi_fitting[:-1]] = scaler.fit_transform(df_train_filtered[list_kpi_fitting[:-1]]) 
@@ -342,7 +348,28 @@ def KPI_fitting(KPI_train, scaler, list_kpi, dep_var, position, min_minutes):
     
     return model_coef, r_squared, list_kpi_fitting
 
+# - End function
+#############################################################################
 
+
+
+""" Function which computes the linear regression fitted 
+    result from a player in a given match.
+
+    Description: 
+    
+    Input:
+        player - KPIs for a player in a given match
+        model_coef - regression model coefficients 
+            (regression model gave as statistically significant)
+        list_kpi_fitting - list of KPIs (regression model gave 
+            as statistically significant)
+        
+    Output: 
+            result - result (fitted xG_team or xG_opponent)
+                for that player in that match
+
+"""
 def compute_fitting_ratings(player, model_coef, list_kpi_fitting):
     
         result = 0
@@ -354,9 +381,30 @@ def compute_fitting_ratings(player, model_coef, list_kpi_fitting):
         
         return result
     
-# Add position and weights
+    # - End function
+#############################################################################
+
+
+
+""" Function which computes the so-called "event-based rating"
+    for a player in a given match
+
+    (Could look over this code and possibly remove df_KPI as input)
+
+    Description: 
+    
+    Input:
+        player - infomration about the player
+        position - position group of the player
+        df_KPI - dataframe of KPIs
+        
+    Output: 
+            result - resulting "event-based rating"
+
+"""
 def compute_events_rating(player, position, df_KPI):
     
+    # default weights
     dict_weights = {'plus_minus': 0.2,
                     'goals': 1,
                     'assists': 0.7,
@@ -375,10 +423,7 @@ def compute_events_rating(player, position, df_KPI):
      
     #Set weight for the different positions
     if position == ['LB', 'RB']:
-         #dict_weights['aerial%'] = 0.4
          dict_weights['def_actions%'] = 0.2
-         #dict_weights['p_adj_succ_def_actions'] = 0.4
-         #dict_weights['creative_passes'] = 0.4
          dict_weights['progressive_carries'] = 0.15
     elif position == ['CB']:
          dict_weights['aerial%'] = 0.3
@@ -392,9 +437,7 @@ def compute_events_rating(player, position, df_KPI):
         dict_weights['succesful_dribbles'] = 0.1
     elif position == ['CM']:
         dict_weights['creative_passes'] = 0.3
-        #dict_weights['progressive_carries'] = 0.1
         dict_weights['succesful_dribbles'] = 0.1
-        #dict_weights['p_adj_succ_def_actions'] = 0.3
     elif position == ['LW', 'RW']:
         dict_weights['aerial%'] = 0.05
         dict_weights['def_actions%'] = 0.05
@@ -404,10 +447,6 @@ def compute_events_rating(player, position, df_KPI):
         dict_weights['p_adj_succ_def_actions'] = 0.05
     elif position == ['ST']:
         dict_weights['def_actions%'] = 0
-        #dict_weights['aerial%'] = 0.1
-        #dict_weights['creative_passes'] = 0.6
-        #dict_weights['progressive_carries'] = 0.5
-        #dict_weights['succesful_dribbles'] = 0.4
         dict_weights['p_adj_succ_def_actions'] = 0
     else:
          print("Not a valid position")
@@ -428,18 +467,56 @@ def compute_events_rating(player, position, df_KPI):
     
     return event_rating
 
+# - End function
+#############################################################################
 
 
+
+""" Function which mainly finds the percentile ranks of the regression-
+    based rating and the event based rating. Sum those two ratings and 
+    adds this to the dataframes "df_KPI_test" and df_ratings as 
+    "final_rating". 
+    
+
+    (This function might need some improvement, exmaple: remove df_KPI)
+
+    df_KPI and df_KPI_test are included mostly for trial and error purposes
+    doing the development
+
+
+    Description: 
+    
+    Input:
+        df_ratings - dataframe of fitting and event rating results. 
+            This dataframe is modified with added columns in the function.
+            Most importantly is "final_rating" added.
+
+        df_KPI - dataframe of KPIs for both training and test data
+
+        df_KPI_test - dataframe of KPIs for the test data. This dataframe
+            is modified with added columns in the function. 
+
+        percentiles_fit - percentile values for the regression-based rating
+        percentiles_events - percentile values for the event-based rating
+        df_matches - Wyscout matches dataframe used for adding info to df_KPI_test
+        
+    Output: 
+            None
+
+"""
 def create_rating_dataframe(df_ratings, df_KPI, df_KPI_test, percentiles_fit, percentiles_events, df_matches):
     for i, player in df_ratings.iterrows():
         mask_match = ((df_KPI['matchId'] == player.matchId) & (df_KPI['playerId'] == player.playerId))
-        # df_the_match = df_KPI_PL.loc[mask_match]
+
+        # Find percentile rank of the regression-based rating
         if df_ratings.loc[i, 'tot_fit_rating'] < percentiles_fit.values[0]:
             final_fit_rating = 0.1
         else: 
             for percentile in percentiles_fit.values:
                 if df_ratings.loc[i, 'tot_fit_rating'] > percentile:
                     final_fit_rating = round(percentiles_fit[percentiles_fit == percentile].index[0] * 5, 1)
+
+        # Find percentile rank of the event-based rating
         if df_ratings.loc[i, 'match_events_rating'] < percentiles_events.values[0]:
             final_event_rating = 0.1
         else: 
@@ -447,6 +524,7 @@ def create_rating_dataframe(df_ratings, df_KPI, df_KPI_test, percentiles_fit, pe
                 if df_ratings.loc[i, 'match_events_rating'] > percentile:
                     final_event_rating = round(percentiles_events[percentiles_events == percentile].index[0] * 5, 1)
         
+        # Sum the regression-based rating and event-based rating
         final_rating = final_fit_rating + final_event_rating
         
         # Find the match info to easier look up the rating elsewhere
@@ -474,10 +552,89 @@ def create_rating_dataframe(df_ratings, df_KPI, df_KPI_test, percentiles_fit, pe
         df_KPI_test.loc[mask_match, 'final_rating'] = final_rating
         df_KPI_test.loc[mask_match, 'match_info'] = match_info
         df_KPI_test.loc[mask_match, 'gameweek'] = gameweek
+
+
+# - End function
+#############################################################################
         
+
+
+""" Function which filters the dataframe 
+
+Description: 
+    
+    Input:  
+            df_KPI - Dataframe with information about player´s KPI´s 
+            from x number of games.
+            
+            position - postion to filter for
+            
+            list_kpi - selected kpi column´s to include in the returne dataframe
+            
+            min_minutes - minutes to filter for
+            
+            min_matches - total number of matches to filter for
         
-        
+    Output: 
+            df_pos_final - Filtered dataframe
+            
 """
+def filter_dataframe(df_KPI, positions, list_kpi, min_minutes, min_matches):
+    
+    # Create a dataframe with all the players from chosen position
+    mask_pos = df_KPI.role.isin(positions)
+    df_pos = df_KPI.loc[mask_pos]
+    
+    # Find the matches were the players have played more than "min_minutes" 
+    mask_tot_min = df_pos.minutesPlayed > min_minutes
+    df_pos = df_pos.loc[mask_tot_min] 
+    
+    # Find the unique player Id´s
+    player_list = df_pos['playerId'].unique().tolist()
+    
+    # Loop through and add the players with more than "min_matches" 
+    # matches to the dataframe
+    player_list_high_minutes = []
+    for player in player_list:
+        mask_player = df_pos.playerId == player
+        df_player = df_pos.loc[mask_player]
+        nr_of_matches = len(df_player)
+        
+        # Add player to the list
+        if (nr_of_matches >= min_matches):
+            player_list_high_minutes.append(player)
+            
+    # Create the final dataframe with matches
+    mask_tot_matches = df_pos.playerId.isin(player_list_high_minutes)
+    df_pos_final = df_pos.loc[mask_tot_matches]
+    
+    # Only return the relevant columns
+    list_columns = list_kpi.copy()
+    list_columns.extend(['playerId', 'shortName', 'teamName', 'matchId']) 
+    df_pos_final = df_pos_final[df_pos.columns.intersection(list_columns)]
+
+    return df_pos_final
+
+# - End function
+#############################################################################
+
+        
+        
+""" Function which plots the final ratings from a match (including subs with
+    more than 20 minutes played).
+
+
+    Description: 
+    
+    Input:
+        df_final_rating - dataframe of all the players ratings from the match
+        home_team_lineup - Wycout shortName of players in home team lineup
+        home_team_bench - Wycout shortName of players on home team bench
+        away_team_lineup - Wycout shortName of players in away team lineup
+        away_team_bench - Wycout shortName of players on away team bench
+        
+    Output: 
+        None (Nice looking plot)
 
 """ 
 def plot_pitch_ratings(df_final_rating, home_team_lineup, home_team_bench, away_team_lineup, away_team_bench):

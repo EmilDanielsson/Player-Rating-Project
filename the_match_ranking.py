@@ -685,7 +685,7 @@ for position in positions_fitting:
         "----------------------------------------------"
         
         # Find the event rating and add to dataframe
-        match_event_rating = ff.compute_events_rating(player, position, df_KPI)
+        match_event_rating = ff.compute_events_rating(player, position)
         df_ratings.loc[i, 'match_events_rating'] = match_event_rating
         
         # Sum fitting rating and add to dataframe
@@ -708,7 +708,7 @@ for position in positions_fitting:
     # Initiate rating dataframe for GW 38
     df_ratings_test = pd.DataFrame()
     
-    # Loop through players in gameweek 38
+    # Loop through players from the given match
     for i, player in df_the_match_KPI_players.iterrows():
         
         # Add some info to dataframe
@@ -748,7 +748,7 @@ for position in positions_fitting:
         "----------------------------------------------"
         
         # Find the event rating and add to dataframe
-        match_event_rating = ff.compute_events_rating(player, position, df_KPI)
+        match_event_rating = ff.compute_events_rating(player, position)
         df_ratings_test.loc[i, 'match_events_rating'] = match_event_rating
         
         # Sum fitting rating and add to dataframe
@@ -825,6 +825,9 @@ for player in away_team_lineup:
     
 #%%
 
+# This copy is only done for testing purposes
 df_plot_ratings = df_final_rating.copy()
+
+# Plot final ratings on a pitch
 ff.plot_pitch_ratings(df_plot_ratings, home_team_lineup, home_team_bench, away_team_lineup, away_team_bench)
 
