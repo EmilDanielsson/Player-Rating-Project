@@ -134,12 +134,12 @@ df_final_rating2 = pd.DataFrame(columns = ['matchId', 'teamName', 'playerId',
 
 # Do fitting for all the positins
 for position in positions_fitting:
-    # print(position)
 
     ################################################
-    # - Kpis to fit for
+    # - Kpis 
     "----------------------------------------------"
     
+    # All Kpis
     list_kpi_all = ['passing%', 
             'completed_passes',
             'fouls',
@@ -163,7 +163,7 @@ for position in positions_fitting:
             'p_adj_succ_def_actions'
             ] 
         
-    # KPIs when using KPI_tot_All
+    # KPIs to fit for when using dep_var "team_xG"
     list_kpi_off = ['passing%', 
                 'completed_passes',
                 'fouls',
@@ -187,6 +187,7 @@ for position in positions_fitting:
                 'p_adj_succ_def_actions'
                 ] 
     
+    # KPIs to fit for when using dep_var "opponent_xG"
     list_kpi_def = ['passing%', 
                 'completed_passes',
                 'fouls',
@@ -390,6 +391,7 @@ with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_ex
     df_sum_rating.to_excel(writer, sheet_name="sum_rating",
                             #columns=['shortName', 'position', 'teamName', 'final_rating'],
                     header=True, index=False)
+
 
 #%%
 # - Print and save the ratings to use for validation_vs_WhoScored
