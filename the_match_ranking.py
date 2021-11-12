@@ -23,9 +23,7 @@ import matplotlib.pyplot as plt
 from mplsoccer import FontManager
 from mplsoccer import Pitch, VerticalPitch
 
-
 # Import other functions
-import percentile_functions as pf
 import fitting_functions as ff
 import KPI_functions as kpi
 
@@ -167,8 +165,6 @@ df_the_match_events = df_events.loc[df_events.matchId == the_matchId]
 # Df with all own goals
 df_own_goals = kpi.own_goals(df_the_match_events)
 
-
-# COULD LOOP OVER MATCHES HERE IF WANTED
 
 #%%
 # - Create the KPI-dataframe from that match
@@ -343,6 +339,7 @@ for player in players_the_match:
         
         ################################################
         # - All function calls to compute kpi's
+        # - (Should maybe try to use df.loc[mask, column] = instead)
         "----------------------------------------------"
         
         # goals
@@ -637,7 +634,7 @@ for position in positions_fitting:
     # Merge the KPIs from the chosen match with the KPIS from 1-37
     
     # Filter and normalise the PL data (including the chosen match)
-    df_filtered_PL = pf.filter_dataframe(df_KPI_PL, position, list_kpi_all, min_minutes, 1)
+    df_filtered_PL = ff.filter_dataframe(df_KPI_PL, position, list_kpi_all, min_minutes, 1)
     df_filtered_PL[list_kpi_all] = scaler.fit_transform(df_filtered_PL[list_kpi_all]) 
     
     # KPIs GW 1-37
@@ -685,7 +682,7 @@ for position in positions_fitting:
         "----------------------------------------------"
         
         # Find the event rating and add to dataframe
-        match_event_rating = ff.compute_events_rating(player, position)
+        match_event_rating = ff.compute_events_rating(player, position, df_KPI)
         df_ratings.loc[i, 'match_events_rating'] = match_event_rating
         
         # Sum fitting rating and add to dataframe
@@ -748,7 +745,7 @@ for position in positions_fitting:
         "----------------------------------------------"
         
         # Find the event rating and add to dataframe
-        match_event_rating = ff.compute_events_rating(player, position)
+        match_event_rating = ff.compute_events_rating(player, position, df_KPI)
         df_ratings_test.loc[i, 'match_events_rating'] = match_event_rating
         
         # Sum fitting rating and add to dataframe
@@ -775,17 +772,9 @@ print(tabulate(table))
 
 #%%
 # - Plot the pitch
+# - Manually input the ACTUAL player positions
 "---------------------------------------------------------------------------"
 
-"""
-Idea: 
-    Find the formation of each team in that game and use as input
-    
-    Find posistion of each player and add to the final dataframe rating
-    
-    Find if the player started that game came in
-    
-"""
 positions = ['GK', 'CB', 'LCB', 'RCB', 'LB', 'RB', 'LWB', 'RWB', 'CM', 
              'LCM', 'RCM', 'CAM', 'LM',
              'RM', 'LW', 'RW', 'ST', 'LST', 'RST']

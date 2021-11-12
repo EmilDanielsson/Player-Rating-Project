@@ -23,7 +23,6 @@ import matplotlib.pyplot as plt
 from mplsoccer import FontManager
 
 # Import other functions
-import percentile_functions as pf
 import fitting_functions as ff
 
 # Statistical fitting of models
@@ -233,7 +232,7 @@ for position in positions_fitting:
     "----------------------------------------------"
     
     # Filter and normalise the PL data (including GW 38)
-    df_filtered_PL = pf.filter_dataframe(df_KPI_PL, position, list_kpi_all, min_minutes, 1)
+    df_filtered_PL = ff.filter_dataframe(df_KPI_PL, position, list_kpi_all, min_minutes, 1)
     df_filtered_PL[list_kpi_all] = scaler.fit_transform(df_filtered_PL[list_kpi_all]) 
     
     # Seperate gameweek 38 from PL
@@ -393,20 +392,21 @@ with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_ex
                     header=True, index=False)
 
 #%%
-# - Print and save the ratings
+# - Print and save the ratings to use for validation_vs_WhoScored
 "---------------------------------------------------------------------------"
 # Print matches from last gameweek ratings
 df_gameweek_38 = df_final_rating.loc[df_final_rating.gameweek == 38]
 rated_matches = df_gameweek_38['matchId'].unique().tolist()
 
+# Print the rated matches
 for match in rated_matches:
     the_match = df_final_rating.loc[df_final_rating['matchId'] == match]
     print(the_match.match_info.values[0])
     table = the_match[['teamName', 'shortName', 'position', 'final_rating']]
     print(tabulate(table))
     
-# # Save to Excel file
-with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
+# # Save to Excel file to use for validation
+with pd.ExcelWriter("../Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
     df_gameweek_38.to_excel(writer, sheet_name="testing_MinMax_new",
                             columns=['teamName', 'shortName', 'position', 'final_rating'],
                     header=True, index=False)

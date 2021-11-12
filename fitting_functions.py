@@ -21,10 +21,6 @@ import matplotlib.pyplot as plt
 from mplsoccer import FontManager
 from mplsoccer import Pitch, VerticalPitch
 
-
-# Import other functions
-import percentile_functions as pf
-
 # Statistical fitting of models
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
@@ -727,7 +723,7 @@ def plot_pitch_ratings(df_final_rating, home_team_lineup, home_team_bench, away_
                 shortName_new += shortName[i]
                 if i == 0: 
                     shortName_new += " "
-                    print("hej")
+                    
         
         x = pitch_positions[position][0]
         y = pitch_positions[position][1] + box_adjustment
