@@ -1,41 +1,20 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Tue Sep 14 16:41:04 2021
 
-@author: emildanielsson
+@author: emildanielsson & JakobEP
 
 Program description: 
-   Find ratings of all players in the last round
-   
-Algorithm: 
+   Finds ratings of all players in the last round and compares them with 
+   read in ratings from WhoScored (for the same matches in last round).
     
 """
-
 
 # The basics
 import pandas as pd
 import numpy as np
 import json
-
-# Plotting
-import matplotlib.pyplot as plt
-from mplsoccer import FontManager
-
-# Import other functions
-import percentile_functions as pf
-
-# Statistical fitting of models
-import statsmodels.api as sm
-import statsmodels.formula.api as smf
-from sklearn import preprocessing
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import RobustScaler
-
-# For tables
-from tabulate import tabulate
-
 
 
 #%%
@@ -99,7 +78,6 @@ for team in teams:
         df_validation.loc[i, 'Quantile'] = Quantile_players.index(playerName) + 1 
         df_validation.loc[i, 'Robust'] = Robust_players.index(playerName) + 1
         
-        
 
 #%%
 # - Validate all players 
@@ -124,6 +102,7 @@ print("All Players validation:")
 print(f"MinMax score = {score_MinMax}")
 print(f"Quantile score = {score_Quantile}")
 print(f"Robust score = {score_Robust}\n")
+
 
 #%%
 # - Validate Positions
@@ -154,6 +133,10 @@ for position in positions:
     print(f"Quantile score = {score_Quantile}")
     print(f"Robust score = {score_Robust}\n")
         
+
+#%%
+# - Write validation results to Excel document
+"---------------------------------------------------------------------------"
 
 with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
     df_validation.to_excel(writer, sheet_name="Validation222",
