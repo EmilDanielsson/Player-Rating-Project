@@ -43,26 +43,26 @@ import json
 
 # Create event dataframe
 #df_Europe_events = pd.read_json('Json_files/events_All.json', encoding="unicode_escape") #SLOWER
-with open('Json_files/events_All.json') as f:
+with open('../Json_files/events_All.json') as f:
     data_Europe= json.load(f)
     
 df_Europe_events = pd.DataFrame(data_Europe)
 
 # Create match dataframes
-df_England_matches = pd.read_json('../Wyscout/matches/matches_England.json', encoding="unicode_escape")
+df_England_matches = pd.read_json('../../Wyscout/matches/matches_England.json', encoding="unicode_escape")
 
-df_France_matches = pd.read_json('../Wyscout/matches/matches_France.json', encoding="unicode_escape")
+df_France_matches = pd.read_json('../../Wyscout/matches/matches_France.json', encoding="unicode_escape")
 
-df_Germany_matches = pd.read_json('../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
+df_Germany_matches = pd.read_json('../../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
 
-df_Italy_matches = pd.read_json('../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
+df_Italy_matches = pd.read_json('../../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
 
-df_Spain_matches = pd.read_json('../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
+df_Spain_matches = pd.read_json('../../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
 
 
 # Create players and teams dataframes
-df_players = pd.read_json("../Wyscout/players.json", encoding="unicode_escape")
-df_teams = pd.read_json("../Wyscout/teams.json", encoding="unicode_escape")
+df_players = pd.read_json("../../Wyscout/players.json", encoding="unicode_escape")
+df_teams = pd.read_json("../../Wyscout/teams.json", encoding="unicode_escape")
 
 
 
@@ -303,13 +303,13 @@ for i, foul_i in df_fouls.iterrows():
 "---------------------------------------------------------------------------"
 
 
-df_minutes_played.to_json("Json_files/minutes_played_All.json")
+df_minutes_played.to_json("../Json_files/minutes_played_All.json")
 
 # Test to load in and store as dataframe
-with open('Json_files/minutes_played_All.json') as f:
-    data_minutes_new = json.load(f)
+# with open('../Json_files/minutes_played_All.json') as f:
+#     data_minutes_new = json.load(f)
     
-df_test_new = pd.DataFrame(data_minutes_new)
+# df_test_new = pd.DataFrame(data_minutes_new)
 
 
 
