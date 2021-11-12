@@ -1,17 +1,28 @@
 # Player_Rating_Project
-
-Azavea Data Analytics team python project template
 ==============================
 
-A file structure template, development environment and rule set for python data analytics projects on the data analytics team
+Instruction of how to run the files, and what needs to be downloaded beforehand, for the Player_Rating_Project. Project has been carried out at Uppsala university for the course "Advanced Course on Topics in Scientific Computing I", HT2021 period 1.
+
+Python Packages needed
+------------
+- `pandas`
+- `numpy`
+- `json`
+- `matplotlib`
+- `seaborn`
+- `mplsoccer`
+- `sklearn`
+- `statsmodels`
+- `tabulate`
 
 Getting Started
 ------------
+Make sure to have Python3 downloaded, along with needed packages listed above.
+
 Change the name of folder that contains this whole repo: `python-project-template` -> `{your project name}`  
 
 From within the repo directory, first remove git tracking from the project  
 
-`rm -rf .git`
 
 The project template uses a placeholder name of 'da-project'. Change that name in the following files/directories (relative to the repo root):
 - `da-project/` (change the name of the folder)  
