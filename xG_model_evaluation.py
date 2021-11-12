@@ -3,7 +3,7 @@
 """
 Created on Fri Sep 17 14:42:31 2021
 
-@author: JakobEP
+@author: emildanielsson & JakobEP
 
 Program description:
     
@@ -23,28 +23,15 @@ import json
 # Plotting
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import classification_report,confusion_matrix
-from sklearn.metrics import ConfusionMatrixDisplay
 from mplsoccer import FontManager
 
 # Import other functions
-import percentile_functions as pf
 import fitting_functions as ff
-import KPI_functions as kpi
 import FCPython 
 
 # Statistical fitting of models
-import statsmodels.api as sm
-import statsmodels.formula.api as smf
-from sklearn import preprocessing
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import RobustScaler
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 
-# For tables
-#from tabulate import tabulate
 
 #%%
 # - Plot settings
@@ -70,7 +57,7 @@ serif_bold = FontManager(URL3)
 """
 
 # Create event dataframe
-with open('Json_files/events_All.json') as f:
+with open('../Json_files/events_All.json') as f:
     data_Europe = json.load(f)
     
 df_Europe_events = pd.DataFrame(data_Europe)
@@ -80,16 +67,16 @@ df_Europe_events = pd.DataFrame(data_Europe)
 df_PL_events = df_Europe_events[df_Europe_events.league == 'England']
 
 # Save as .json-file (so it can be read in directly in the future)
-df_PL_events.to_json("Json_files/events_PL.json")
+df_PL_events.to_json("../Json_files/events_PL.json")
 
 """
 
 #%%
-# - Read in event data for PL
+# - Read in event data for PL, uncomment if needed
 "---------------------------------------------------------------------------" 
 """
 # Create event dataframe
-with open('Json_files/events_PL.json') as f:
+with open('../Json_files/events_PL.json') as f:
     data_PL = json.load(f)
     
 df_PL_events = pd.DataFrame(data_PL)
@@ -100,11 +87,11 @@ df_PL_events = pd.DataFrame(data_PL)
 # - Read in data for xG-model
 "---------------------------------------------------------------------------"  
 
-with open('Json_files/xG_model_v2_All_except_Eng.json') as f:
+with open('../Json_files/xG_model_v2_All_except_Eng.json') as f:
     data_xG_model_All = json.load(f)
     
     
-with open('Json_files/xG_model_v2_England_only.json') as f:
+with open('../Json_files/xG_model_v2_England_only.json') as f:
     data_xG_model_PL = json.load(f)
 
 
@@ -152,11 +139,6 @@ y_testSet = df_xG_shots[['goal']].copy()                      # change df
 # Adding distance squared to df
 squaredD = x_testSet['distance']**2
 x_testSet = x_testSet.assign(distance_sq = squaredD)
-
-# y(x) where y = shot result, x1 = distance, x2 = angle
-#x_train, x_test, y_train, y_test = train_test_split(df_trainSet.drop('goal', axis=1), 
-#                                                    df_trainSet['goal'], test_size=0.99, 
-#                                                    random_state=10)
 
 
 #%%
@@ -224,10 +206,10 @@ Precision - describes what the ratio of true positive points are among the ones 
 (close to 1) is good, and a low recall (close to 0) indicates a problem with false positives."""
 
 
-cm_5 = confusion_matrix(y_testSet, y_pred5)
-cm_2 = confusion_matrix(y_testSet, y_pred2)
-cm_05 = confusion_matrix(y_testSet, y_pred05)
-cm_4 = confusion_matrix(y_testSet, y_pred4)
+cm_5 = metrics.confusion_matrix(y_testSet, y_pred5)
+cm_2 = metrics.confusion_matrix(y_testSet, y_pred2)
+cm_05 = metrics.confusion_matrix(y_testSet, y_pred05)
+cm_4 = metrics.confusion_matrix(y_testSet, y_pred4)
 
 #sensitivity = the ability of the model to correctly identify shots that resulted in a goal.
 sensitivity_5 = cm_5[1][1]/(cm_5[1][1] + cm_5[1][0])
@@ -286,8 +268,7 @@ plt.title('ROC Curve', fontweight='bold', fontsize=24, fontproperties=serif_regu
 
 
 #%%
-#############################################################################
-# - Evaluate models by plotting
+# - Evaluate xG-model by plotting
 "---------------------------------------------------------------------------"
 
 coef_angle = df_log_model_shots_coef.iloc[0].values[0]
