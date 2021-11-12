@@ -1,24 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Oct  8 15:41:53 2021
-
-@author: emildanielsson
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
 Created on Tue Sep 14 16:41:04 2021
 
-@author: emildanielsson
+@author: emildanielsson & JakobEP
 
 Program description: 
     
-    Funtions for fitting
+    Funtions for fitting.
     
 """
-
 
 # The basics
 import pandas as pd
@@ -47,10 +38,9 @@ from sklearn.linear_model import LogisticRegression
 from tabulate import tabulate
 
 
-
 #%%
 # - Load Fonts
-"----------------------------------------------"
+"---------------------------------------------------------------------------" 
 
 URL1 = ('https://github.com/googlefonts/SourceSerifProGFVersion/blob/main/'
         'fonts/SourceSerifPro-Regular.ttf?raw=true')
@@ -65,9 +55,22 @@ serif_bold = FontManager(URL3)
 
 #%%
 # - Functions
-"----------------------------------------------"
+"---------------------------------------------------------------------------" 
 
+""" Function which 
+
+Description: 
+    
+    Input:
+           df_xG_model - dataframe for all shots, headers, freekicks, penalties
+           and their tags (go/no goal)
+        
+    Output: 
+            dataframe for all coefficients and fitted log models
+        
+"""
 def xG_model(df_xG_model):
+    
     #################################################
     # - Filter out headers and freekicks
     "------------------------------------------------"
@@ -95,7 +98,6 @@ def xG_model(df_xG_model):
     x_train, x_test, y_train, y_test = train_test_split(df_trainSet.drop('goal', axis=1), 
                                                         df_trainSet['goal'], test_size=0.20, 
                                                         random_state=10)
-    
     
     
     #################################################
@@ -200,11 +202,11 @@ def xG_model(df_xG_model):
     df_log_model_free_kicks_coef.loc['intercept'] = log_model_free_kicks.intercept_[0]
     print(df_log_model_free_kicks_coef)
     
-    return df_log_model_shots_coef, df_log_model_free_kicks_coef, df_log_model_free_kicks_coef
+    return df_log_model_shots_coef, df_log_model_free_kicks_coef, df_log_model_free_kicks_coef, log_model, log_model_headers, log_model_free_kicks
 
 
 
-"""Funciton to determine the position of a player
+""" Function to determine the position of a player.
     Inputs: x: average x-coordinate
             y: average y-coordinate
             position: Position taken from Wyscout "role"-column 
@@ -553,7 +555,7 @@ def plot_pitch_ratings(df_final_rating, home_team_lineup, home_team_bench, away_
         ax.text(x+box_addition, y-5, str(round(rating, 1)), ha = alignment, fontsize = text_size,
              fontproperties = serif_bold.prop, bbox=props)
         ax.text(x, y, shortName_new, ha = alignment, fontsize = text_size, color=team_color,
-             fontproperties = serif_bold.prop) # lägg till fonts
+             fontproperties = serif_bold.prop) # add fonts
     
     
     # Place the home team bench
@@ -588,7 +590,7 @@ def plot_pitch_ratings(df_final_rating, home_team_lineup, home_team_bench, away_
             ax.text(bench_x+5, bench_y-5, str(round(rating, 1)), ha = "center", fontsize = text_size,
                     fontproperties = serif_bold.prop, bbox=props)
             ax.text(bench_x, bench_y, shortName_new, ha = "left", fontsize = text_size, color=team_color,
-             fontproperties = serif_regular.prop) # lägg till fonts
+             fontproperties = serif_regular.prop) # add fonts
             bench_x += 20
     
     # Place the away team lineup
@@ -628,7 +630,7 @@ def plot_pitch_ratings(df_final_rating, home_team_lineup, home_team_bench, away_
         ax.text(x+box_addition, y-5, str(round(rating, 1)), ha = alignment, fontsize = text_size,
              fontproperties = serif_bold.prop, bbox=props)
         ax.text(x, y, shortName_new, fontsize = text_size, ha = alignment, color=team_color,
-                 fontproperties = serif_bold.prop) # lägg till fonts
+                 fontproperties = serif_bold.prop) # add fonts
     
     bench_x = 50
     bench_y = 110
@@ -661,11 +663,9 @@ def plot_pitch_ratings(df_final_rating, home_team_lineup, home_team_bench, away_
             
             # place name of the benched player
             ax.text(bench_x, bench_y, shortName_new, ha = "left", fontsize = text_size, color=team_color,
-             fontproperties = serif_regular.prop) # lägg till fonts
+             fontproperties = serif_regular.prop) # add fonts
             bench_x += 15       
             
-    
-    
     
     
             

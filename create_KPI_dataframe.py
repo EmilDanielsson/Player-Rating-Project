@@ -10,7 +10,7 @@ Program description:
     2. Creates two dataframes; 
         df_KPI      - Dataframe of all the player's KPI's from each game
         df_KPI_info - Dataframe with info of player's KPI's 
-    (3.) Creates and stores the two dataframes as json-files in the working directory
+    (3.) Create and store the two dataframes as json-files in the working directory
     
 """
 
@@ -57,7 +57,6 @@ df_Spain_matches = pd.read_json('../Wyscout/matches/matches_Spain.json', encodin
 # Create players and teams dataframes
 df_players = pd.read_json("../Wyscout/players.json", encoding="unicode_escape")
 df_teams = pd.read_json("../Wyscout/teams.json", encoding="unicode_escape")
-
 
 
 #%%
@@ -119,7 +118,6 @@ df_trainSet = df_trainSet.assign(distance_sq = squaredD)
 x_train, x_test, y_train, y_test = train_test_split(df_trainSet.drop('goal', axis=1), 
                                                     df_trainSet['goal'], test_size=0.20, 
                                                     random_state=10)
-
 
 
 #%%
@@ -223,7 +221,6 @@ df_log_model_free_kicks_coef = pd.DataFrame(log_model_free_kicks_coef,
 # Add to df
 df_log_model_free_kicks_coef.loc['intercept'] = log_model_free_kicks.intercept_[0]
 print(df_log_model_free_kicks_coef)
-
 
 
 #%%
@@ -594,12 +591,12 @@ for i, match in df_Europe_matches.iterrows():
     j+=1
 
 
-# - Save dataframes to json-files
+#%%
+# - Save dataframes to json-files, uncommen which to save
 "---------------------------------------------------------------------------" 
 df_KPI_p90.to_json("Json_files/KPI_per_90_All.json")
 df_KPI_tot.to_json("Json_files/KPI_tot_All.json")
 df_KPI_info.to_json("Json_files/KPI_info_All.json")
 
         
-#%%        
-        
+    

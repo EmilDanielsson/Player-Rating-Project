@@ -1,13 +1,12 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Tue Sep 14 16:41:04 2021
 
-@author: emildanielsson
+@author: emildanielsson % JakobEP
 
 Program description: 
-   Find ratings of all players in the last round
+   Find ratings of all players in the last round.
    
 Algorithm: 
     
@@ -45,8 +44,6 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 #%%
 # - Read in data KPI data
 "---------------------------------------------------------------------------"
-
-
 
 # Test to load in and store as dataframe per_90 dont have all collumns yet
 # with open('Json_files/KPI_per_90_All.json') as f:

@@ -10,7 +10,7 @@ Program description:
     2. Creates two dataframes; 
         df_KPI      - Dataframe of all the player's KPI's from each game
         df_KPI_info - Dataframe with info of player's KPI's 
-    (3.) Creates and stores the two dataframes as json-files in the working directory
+    (3.) Create and store the two dataframes as json-files in working directory
     
 """
 
@@ -18,14 +18,6 @@ Program description:
 import pandas as pd
 import numpy as np
 import json
-
-
-# Statistical fitting of models
-# import statsmodels.api as sm
-# import statsmodels.formula.api as smf
-# from sklearn.model_selection import train_test_split
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.preprocessing import PolynomialFeatures
 
 # Import KPI-funcion
 import KPI_functions as kpi
@@ -57,7 +49,6 @@ df_Spain_matches = pd.read_json('../../Wyscout/matches/matches_Spain.json', enco
 # Create players and teams dataframes
 df_players = pd.read_json("../../Wyscout/players.json", encoding="unicode_escape")
 df_teams = pd.read_json("../../Wyscout/teams.json", encoding="unicode_escape")
-
 
 
 #%%
@@ -206,6 +197,7 @@ for i, match in df_Europe_matches.iterrows():
 
     j+=1
 
+
 #%%
 # - Create the new columns team_xG_p90, opponents_xG, possesion, etc
 "---------------------------------------------------------------------------"
@@ -260,15 +252,12 @@ for match in list_matches:
         # df_KPI_tot.loc[mask_add_xG, 'opponent_shots'] = opponent_shots
 
 
-
-
-
 #%%
-# - Save dataframes to json-files
+# - Save dataframes to json-files, uncomment which to save
 "---------------------------------------------------------------------------" 
+
 df_KPI_p90.to_json("Json_files/KPI_per_90_All.json")
 df_KPI_tot.to_json("Json_files/KPI_tot_All.json")
 #df_KPI_info.to_json("Json_files/new_KPI_info_All.json")
 
-        
         
