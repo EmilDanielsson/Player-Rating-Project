@@ -34,8 +34,8 @@ Getting Started
 Project Organization
 ------------
 
-    ├── README.md                           <- The top-level README for running this project.
-    ├── Wyscout                             <- Wyscout data folder.
+    ├── README.md                               <- The top-level README for running this project.
+    ├── Wyscout                                 <- Wyscout data folder.
     │   ├── players.json      
     │   ├── teams.json      
     │   ├── events            
@@ -51,15 +51,11 @@ Project Organization
     │       ├── matches_Italy.json
     │       └── matches_Spain.json
     │
-    └──Player_rating_Project                <- Main folder for this project.
+    └──Player_rating_Project                    <- Main folder for this project.
         │
+        │── Json_files                          <- Folder where created json-files are stored.
         │
-        │
-        │
-        │
-        │
-        │
-        └── Python_Code                     <- Source code for this project.
+        └── Python_Code                         <- Source code for this project.
             |
             |── create_events_df_eu.py
             |── create_KPI_dataframe_EDIT.py
@@ -74,22 +70,6 @@ Project Organization
             |── the_match_ranking.py
             |── validation_vs_WhoScored.py
             └── xG_model_evaluation.py
-            
-            
-            │
-            ├── data           <- Scripts to download or generate data
-            │   └── make_dataset.py
-            │
-            ├── features       <- Scripts to turn raw data into features for modeling
-            │   └── build_features.py
-            │
-            ├── models         <- Scripts to train models and then use trained models to make
-            │   │                 predictions
-            │   ├── predict_model.py
-            │   └── train_model.py
-            │
-            └── visualization  <- Scripts to create exploratory and results oriented visualizations
-                └── visualize.py
     
 
 
