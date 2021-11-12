@@ -37,26 +37,26 @@ import KPI_functions as kpi
 
 # Create event dataframe
 #df_Europe_events = pd.read_json('Json_files/events_All.json', encoding="unicode_escape") #SLOWER
-with open('Json_files/events_All.json') as f:
+with open('../Json_files/events_All.json') as f:
     data_Europe= json.load(f)
     
 df_Europe_events = pd.DataFrame(data_Europe)
 
 # Create match dataframes
-df_England_matches = pd.read_json('../Wyscout/matches/matches_England.json', encoding="unicode_escape")
+df_England_matches = pd.read_json('../../Wyscout/matches/matches_England.json', encoding="unicode_escape")
 
-df_France_matches = pd.read_json('../Wyscout/matches/matches_France.json', encoding="unicode_escape")
+df_France_matches = pd.read_json('../../Wyscout/matches/matches_France.json', encoding="unicode_escape")
 
-df_Germany_matches = pd.read_json('../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
+df_Germany_matches = pd.read_json('../../Wyscout/matches/matches_Germany.json', encoding="unicode_escape")
 
-df_Italy_matches = pd.read_json('../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
+df_Italy_matches = pd.read_json('../../Wyscout/matches/matches_Italy.json', encoding="unicode_escape")
 
-df_Spain_matches = pd.read_json('../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
+df_Spain_matches = pd.read_json('../../Wyscout/matches/matches_Spain.json', encoding="unicode_escape")
 
 
 # Create players and teams dataframes
-df_players = pd.read_json("../Wyscout/players.json", encoding="unicode_escape")
-df_teams = pd.read_json("../Wyscout/teams.json", encoding="unicode_escape")
+df_players = pd.read_json("../../Wyscout/players.json", encoding="unicode_escape")
+df_teams = pd.read_json("../../Wyscout/teams.json", encoding="unicode_escape")
 
 
 
@@ -75,7 +75,7 @@ df_Europe_matches = pd.concat(frames_matches, keys = ["England", "France",
 # - Read in minutes played data
 "---------------------------------------------------------------------------"
 
-with open('Json_files/minutes_played_All.json') as f:
+with open('../Json_files/minutes_played_All.json') as f:
     data_minutes = json.load(f)
     
 df_minutes = pd.DataFrame(data_minutes)
@@ -85,7 +85,7 @@ df_minutes = pd.DataFrame(data_minutes)
 # - Read in data for xG-model
 "---------------------------------------------------------------------------"  
 
-with open('Json_files/xG_model_v2_All_except_Eng.json') as f:
+with open('../Json_files/xG_model_v2_All_except_Eng.json') as f:
     data_xG_model = json.load(f)
 
 # Create dataframes
