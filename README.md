@@ -38,6 +38,7 @@ Project Organization
     ├── README.md                               <- The top-level README for running this project.
     |
     ├── Wyscout                                 <- Wyscout data folder.
+    │   │
     │   ├── players.json
     │   │
     │   ├── teams.json  
