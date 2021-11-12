@@ -20,58 +20,37 @@ Downloads
 Make sure to have Python3 downloaded, along with needed packages listed above.
 
 Get the Wyscout data from: https://figshare.com/collections/Soccer_match_event_dataset/4415000/2 
-The following data sets from Wyscout are needed: events, matches, players, teams.
+The following data sets from Wyscout are needed: "events.json", "matches.json", "players.json" and "teams.json".
 
-Place the downloaded Wyscout data in a folder named: `Wyscout`, placed one level above the Python code.
+Place the downloaded Wyscout data in a folder named: `Wyscout`, placed two levels above the Python code.
 
-Also download Excel-sheet `Gameweek_38.xlsx` from XXXXXXXX and place at the same dictionary level as the Wyscout-folder.
+Also download Excel-sheet `Gameweek_38.xlsx` from XXXXXXXX and place at one level above the Python code.
 
 Getting Started
 ------------
 
 
-Change the name of folder that contains this whole repo: `python-project-template` -> `{your project name}`  
-
-From within the repo directory, first remove git tracking from the project  
-
-
-The project template uses a placeholder name of 'da-project'. Change that name in the following files/directories (relative to the repo root):
-- `da-project/` (change the name of the folder)  
-- `./docker/run/`  
-- `./docker/build/`
-
-If you have not already done so, build the Docker image (you will only need to do this once)
-
-`docker/build`
-
-Run a Docker container:
-
-`docker/run`  
-
-This will open a bash shell within the Docker container. Within the container the 'project' directory on the host machine (as specified as a parameter of `run` above) will map to `/opt/src/` within the container. You can now access the full file structure of this template from within the container.
-
-Run a Jupyter Notebook within Docker container:
-
-`docker/jupyter`
-
-You will need to open the link that is displayed in your terminal.
-
-To exit:
-
-`exit`  
-
-Initialize a new git repository:
-
-`git init`  
 
 Project Organization
 ------------
 
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── interm         <- Intermediate data that has been transformed
-    │   ├── processed      <- The final, canonical data sets for modeling
-    │   └── raw            <- The original, immutable data dump
+    ├── README.md          <- The top-level README for running this project.
+    ├── Wyscout
+    │   ├── players.json      
+    │   ├── teams.json      
+    │   ├── events            
+    │   │   ├── events_England.json
+    │   │   ├── events_France.json
+    │   │   ├── events_Germany.json
+    │   │   ├── events_Italy.json
+    │   │   └── events_Spain.json
+    │   └── matches            
+    │       ├── matches_England.json
+    │       ├── matches_France.json
+    │       ├── matches_Germany.json
+    │       ├── matches_Italy.json
+    │       └── matches_Spain.json
+    │
     │
     ├── guide              <- A set of markdown files with documented best practices, guidelines and rools for collaborative projects
     │
