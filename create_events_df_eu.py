@@ -3,7 +3,7 @@
 """
 Created on Fri Sep 10 12:04:25 2021
 
-@author: emildanielsson
+@author: emildanielsson & JakobEP
 
 Program description:
     1. Read in Wyscout data, Events, Players, Matches and Teams
@@ -11,8 +11,8 @@ Program description:
         - get rid of gk's from players data
         - get rid of gk-events from event data
         - get rid of events with unknown playerId
-    3. Merge all the legaue event files to one datafram
-    4. Creates and stores a new events.json file in the working directory
+    3. Merge all the league event files to one dataframe (df)
+    4. Create and store a new events.json file in the working directory
         - Added column "Position" with the detected position
         - Added column "shortName" with the shortName from Wyscout
         
@@ -59,7 +59,6 @@ df_players = pd.read_json("../../Wyscout/players.json", encoding="unicode_escape
 df_teams = pd.read_json("../../Wyscout/teams.json", encoding="unicode_escape")
 
 
-
 #%%
 # - Merge dataframes from all leagues but England
 "---------------------------------------------------------------------------"
@@ -78,6 +77,7 @@ frames_matches = [df_England_matches, df_France_matches, df_Germany_matches,
 df_Europe_matches = pd.concat(frames_matches, keys = ["England", "France", "Germany", "Italy", "Spain"])
 df_Europe_matches = df_Europe_matches.reset_index(level=[0])
 df_Europe_matches = df_Europe_matches.rename(columns ={'level_0': "league"})
+
 
 #%%
 # - Add shortName and position to df_Europe
@@ -139,7 +139,7 @@ for match_i in matchId_list:
         # New dataframe with all events from 'player' in match 'match_i'
         player_df = df_match.loc[mask_player]
 
-        # Inititae lists to be filled with x and y coordinates
+        # Initiate lists to be filled with x and y coordinates
         x_list = []
         y_list = []
         
@@ -168,7 +168,6 @@ for match_i in matchId_list:
     j+=1
 
 
-
 # Filter out events with goalkeepers
 mask_gk = df_Europe_events.Position == "GK"
 df_Europe_events = df_Europe_events[~mask_gk]
@@ -177,6 +176,7 @@ df_Europe_events = df_Europe_events[~mask_gk]
 #%%
 # - Save dataframe of Europe events to working directory
 "---------------------------------------------------------------------------"
+
 df_Europe_events.reset_index(inplace=True)
 df_Europe_events.to_json("Json_files/events_All.json")
 
