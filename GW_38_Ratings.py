@@ -380,13 +380,13 @@ df_mean_rating = df_final_rating2.groupby(['shortName', 'teamName'], as_index=Fa
 df_sum_rating = df_final_rating2.groupby(['shortName'], as_index=False)["final_rating"].sum()
 
 # # Save to Excel file
-with pd.ExcelWriter("../Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
+with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
     df_mean_rating.to_excel(writer, sheet_name="mean_rating",
                             #columns=['shortName', 'position', 'teamName', 'final_rating'],
                     header=True, index=False)
     
 # # Save to Excel file
-with pd.ExcelWriter("../Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
+with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
     df_sum_rating.to_excel(writer, sheet_name="sum_rating",
                             #columns=['shortName', 'position', 'teamName', 'final_rating'],
                     header=True, index=False)
@@ -405,9 +405,13 @@ for match in rated_matches:
     table = the_match[['teamName', 'shortName', 'position', 'final_rating']]
     print(tabulate(table))
     
+
+print("Adding results Gameweek_38.xlsx, choose filename:\n")
+file_name = input()
+    
 # # Save to Excel file to use for validation
-with pd.ExcelWriter("../Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
-    df_gameweek_38.to_excel(writer, sheet_name="testing_MinMax_new",
+with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
+    df_gameweek_38.to_excel(writer, sheet_name=file_name,
                             columns=['teamName', 'shortName', 'position', 'final_rating'],
                     header=True, index=False)
 

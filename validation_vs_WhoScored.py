@@ -8,6 +8,8 @@ Created on Tue Sep 14 16:41:04 2021
 Program description: 
    Finds ratings of all players in the last round and compares them with 
    read in ratings from WhoScored (for the same matches in last round).
+   
+   OBS! Make sure to run GW_38_Ratings.py firstly and then 
     
 """
 
@@ -19,7 +21,9 @@ import json
 
 #%%
 # - Read Excels
+# - 
 # - Make sure to choose the correct sheets
+# - 
 "---------------------------------------------------------------------------"
 
 # Specify the path to the xlsx-file
@@ -28,14 +32,12 @@ excel_path = "Gameweek_38.xlsx"
 df_WhoScored = pd.read_excel(open(excel_path, 'rb'),
               sheet_name='WhoScored')  
 
-df_MinMax = pd.read_excel(open(excel_path, 'rb'),
-              sheet_name='testing_MinMax_new') 
+df_pre_tune = pd.read_excel(open(excel_path, 'rb'),
+              sheet_name='result_pre_tune') 
 
-df_Quantile = pd.read_excel(open(excel_path, 'rb'),
-              sheet_name='testing_Quantile_new') 
+df_post_tune = pd.read_excel(open(excel_path, 'rb'),
+              sheet_name='result_post_tune') 
 
-df_Robust = pd.read_excel(open(excel_path, 'rb'),
-              sheet_name='testing_Robust_new') 
 
 
 #%%
@@ -54,20 +56,15 @@ for team in teams:
     df_WhoScored_team = df_WhoScored_team.sort_values(by='Rating', ascending=False)
     WhoScored_players = df_WhoScored_team.shortName.values.tolist()
     
-    # MinMax frame sorted
-    df_MinMax_team = df_MinMax.loc[df_MinMax.teamName == team]
-    df_MinMax_team = df_MinMax_team.sort_values(by='final_rating', ascending=False)
-    MinMax_players = df_MinMax_team.shortName.values.tolist()
+    # df_pre_tune frame sorted
+    df_pre_tune_team = df_pre_tune.loc[df_pre_tune.teamName == team]
+    df_pre_tune_team = df_pre_tune_team.sort_values(by='final_rating', ascending=False)
+    pre_tune_players = df_pre_tune_team.shortName.values.tolist()
     
-    # Quantile frame sorted
-    df_Quantile_team = df_Quantile.loc[df_Quantile.teamName == team]
-    df_Quantile_team = df_Quantile_team.sort_values(by='final_rating', ascending=False)
-    Quantile_players = df_Quantile_team.shortName.values.tolist()
-    
-    # Robust frame sorted
-    df_Robust_team = df_Robust.loc[df_Robust.teamName == team]
-    df_Robust_team = df_Robust_team.sort_values(by='final_rating', ascending=False)
-    Robust_players = df_Robust_team.shortName.values.tolist()
+    # df_ost_tune frame sorted
+    df_post_tune_team = df_post_tune.loc[df_post_tune.teamName == team]
+    df_post_tune_team = df_post_tune_team.sort_values(by='final_rating', ascending=False)
+    post_tune_players = df_post_tune_team.shortName.values.tolist()
     
     for i, player in df_WhoScored_team.iterrows():
         playerName = player.shortName
@@ -75,34 +72,30 @@ for team in teams:
         df_validation.loc[i, 'Position'] = player.position
         df_validation.loc[i, 'teamName'] = player.teamName
         df_validation.loc[i, 'WhoScored'] = WhoScored_players.index(playerName) + 1
-        df_validation.loc[i, 'MinMax'] = MinMax_players.index(playerName) + 1
-        df_validation.loc[i, 'Quantile'] = Quantile_players.index(playerName) + 1 
-        df_validation.loc[i, 'Robust'] = Robust_players.index(playerName) + 1
+        df_validation.loc[i, 'pre_tune'] = pre_tune_players.index(playerName) + 1
+        df_validation.loc[i, 'post_tune'] = post_tune_players.index(playerName) + 1 
         
 
 #%%
 # - Validate all players 
 "---------------------------------------------------------------------------"
 
-score_MinMax = 0
-score_Quantile = 0
-score_Robust = 0
+score_pre = 0
+score_post = 0
 nr_of_players = len(df_validation)
 for i, player in df_validation.iterrows():
-    score_MinMax += abs(player.WhoScored - player.MinMax) 
-    score_Quantile += abs(player.WhoScored - player.Quantile) 
-    score_Robust += abs(player.WhoScored - player.Robust) 
+    score_pre += abs(player.WhoScored - player.pre_tune) 
+    score_post += abs(player.WhoScored - player.post_tune) 
     
 # Divide by the number of players (average "false" in comparison to WhoScored)
-score_MinMax = score_MinMax / nr_of_players
-score_Quantile = score_Quantile / nr_of_players
-score_Robust = score_Robust / nr_of_players 
+score_pre = score_pre / nr_of_players
+score_post = score_post / nr_of_players
     
 # Print Validation for all players
 print("All Players validation:")
-print(f"MinMax score = {score_MinMax}")
-print(f"Quantile score = {score_Quantile}")
-print(f"Robust score = {score_Robust}\n")
+print(f"pre tuning score = {score_pre}")
+print(f"post score = {score_post}\n")
+
 
 
 #%%
@@ -114,32 +107,28 @@ positions = [['LB', 'RB'], ['CB'], ['LM', 'RM'], ['CM'], ['LW', 'RW'], ['ST']]
 
 for position in positions:
     df_validate = df_validation.loc[df_validation.Position.isin(position)]
-    score_MinMax = 0
-    score_Quantile = 0
-    score_Robust = 0
+    score_pre = 0
+    score_post = 0
     nr_of_players = len(df_validate)
     for i, player in df_validate.iterrows():
-        score_MinMax += abs(player.WhoScored - player.MinMax) 
-        score_Quantile += abs(player.WhoScored - player.Quantile) 
-        score_Robust += abs(player.WhoScored - player.Robust) 
-        
+        score_pre += abs(player.WhoScored - player.pre_tune) 
+        score_post += abs(player.WhoScored - player.post_tune) 
+    
     # Divide by the number of players (average "false" in comparison to WhoScored)
-    score_MinMax = score_MinMax / nr_of_players
-    score_Quantile = score_Quantile / nr_of_players
-    score_Robust = score_Robust / nr_of_players 
+    score_pre = score_pre / nr_of_players
+    score_post = score_post / nr_of_players
         
-    # Print Validation for the position
-    print(f"Validation: {position}")
-    print(f"MinMax score = {score_MinMax}")
-    print(f"Quantile score = {score_Quantile}")
-    print(f"Robust score = {score_Robust}\n")
+    # Print Validation for all players
+    print(f"Validation {position}")
+    print(f"pre tuning score = {score_pre}")
+    print(f"post score = {score_post} \n")
         
 
 #%%
 # - Write validation results to Excel document
 "---------------------------------------------------------------------------"
 
-with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
-    df_validation.to_excel(writer, sheet_name="Validation222",
-                            columns=['shortName', 'Position', 'teamName', 'WhoScored', 'MinMax'],
-                    header=True, index=False)
+# with pd.ExcelWriter("Gameweek_38.xlsx", mode="a", engine="openpyxl", if_sheet_exists = "new") as writer:
+#     df_validation.to_excel(writer, sheet_name="WhoScored_Validation",
+#                             columns=['shortName', 'Position', 'teamName', 'WhoScored', 'pre_tune', 'pre_tune'],
+#                     header=True, index=False)
