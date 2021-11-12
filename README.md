@@ -60,6 +60,22 @@ Project Organization
         │
         │
         └── Python_Code                     <- Source code for this project.
+            |
+            |── create_events_df_eu.py
+            |── create_KPI_dataframe_EDIT.py
+            |── create_KPI_dataframe.py
+            |── FCPython.py
+            |── fitting_functions.py
+            |── GW_38_Ratings_evaluation.py
+            |── GW_38_Ratings.py
+            |── KPI_functions.py
+            |── minutes_played.py
+            |── percentile_functions.py
+            |── the_match_ranking.py
+            |── validation_vs_WhoScored.py
+            └── xG_model_evaluation.py
+            
+            
             │
             ├── data           <- Scripts to download or generate data
             │   └── make_dataset.py
