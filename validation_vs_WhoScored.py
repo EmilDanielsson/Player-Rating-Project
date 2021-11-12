@@ -19,6 +19,7 @@ import json
 
 #%%
 # - Read Excels
+# - Make sure to choose the correct sheets
 "---------------------------------------------------------------------------"
 
 # Specify the path to the xlsx-file
