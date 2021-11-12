@@ -20,11 +20,12 @@ Downloads
 Make sure to have Python3 downloaded, along with needed packages listed above.
 
 Get the Wyscout data from: https://figshare.com/collections/Soccer_match_event_dataset/4415000/2 
+
 The following data sets from Wyscout are needed: "events.json", "matches.json", "players.json" and "teams.json".
 
-Place the downloaded Wyscout data in a folder named: `Wyscout`, placed two levels above the Python code.
+Place the downloaded Wyscout data in a folder named: `Wyscout`, placed two levels above the Python code (see below).
 
-Also download Excel-sheet `Gameweek_38.xlsx` from XXXXXXXX and place at one level above the Python code.
+Also download Excel-sheet `Gameweek_38.xlsx` from XXXXXXXX and place at one level above the Python code (see below).
 
 Getting Started
 ------------
@@ -35,15 +36,19 @@ Project Organization
 ------------
 
     ├── README.md                               <- The top-level README for running this project.
+    |
     ├── Wyscout                                 <- Wyscout data folder.
-    │   ├── players.json      
-    │   ├── teams.json      
+    │   ├── players.json
+    │   │
+    │   ├── teams.json  
+    │   │
     │   ├── events            
     │   │   ├── events_England.json
     │   │   ├── events_France.json
     │   │   ├── events_Germany.json
     │   │   ├── events_Italy.json
     │   │   └── events_Spain.json
+    │   │
     │   └── matches            
     │       ├── matches_England.json
     │       ├── matches_France.json
@@ -52,6 +57,8 @@ Project Organization
     │       └── matches_Spain.json
     │
     └──Player_rating_Project                    <- Main folder for this project.
+        |
+        │── Gameweek_38.xlsx                    <- Excel with validation data from Whoscored to compare with.
         │
         │── Json_files                          <- Folder where created json-files are stored.
         │
@@ -66,13 +73,10 @@ Project Organization
             |── GW_38_Ratings.py
             |── KPI_functions.py
             |── minutes_played.py
-            |── percentile_functions.py
             |── the_match_ranking.py
             |── validation_vs_WhoScored.py
             └── xG_model_evaluation.py
-    
-
 
 --------
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+By: Jakob Edberger Persson and Emil Danielsson, 2021
