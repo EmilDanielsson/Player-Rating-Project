@@ -41,7 +41,19 @@ Also download Excel-sheet `Gameweek_38.xlsx` from https://docs.google.com/spread
 
 Running Instructions
 ------------
+When the folders and files above are downloaded (or created) the following programs can be ran to see the resulting ratings from game week 38
 
+    1. GW_38_Ratings.py
+    
+    2. the_match_ranking.py
+    
+The following programs can then be ran to evalute the ratings and the xG-model 
+
+    1. GW_38_Ratings_evaluation.py
+    
+    2. xG_model_evaluation.py
+    
+    3. validation_vs_WhoScored.py
 
 
 Project Organization
