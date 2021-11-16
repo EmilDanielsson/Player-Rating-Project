@@ -41,7 +41,7 @@ Also download Excel-sheet `Gameweek_38.xlsx` from https://docs.google.com/spread
 
 Running Instructions
 ------------
-When the folders and files above are downloaded (or created) the following programs can be ran to see the resulting ratings from game week 38
+When the folders and files above are downloaded (or created) the following programs can be ran to see the resulting ratings from gameweek 38
 
     1. GW_38_Ratings.py
     
