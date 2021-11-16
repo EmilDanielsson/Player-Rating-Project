@@ -25,7 +25,12 @@ The following data sets from Wyscout are needed: "events.json", "matches.json", 
 
 Place the downloaded Wyscout data in a folder named: `Wyscout`, placed two levels above the Python code (see below).
 
-Download the folder 'Json_files' from https://drive.google.com/drive/folders/1Yhta6-kl6Z9sn_Uy2JpMC9UiNObn6VFz?usp=sharing and place at one level above the Python code (see below).
+Download the folder 'Json_files' from https://drive.google.com/drive/folders/1Yhta6-kl6Z9sn_Uy2JpMC9UiNObn6VFz?usp=sharing and place at one level above the Python code (see below). The files in this folder can also be generated if the Wyscout data is downloaded by running the following programmes in order:
+    1. create_events_df_eu.py
+    2. minutes_played.py 
+    3. create_KPI_dataframe.py 
+    (4.) create_KPI_dataframe_EDIT.py (This code program might need some modifications to it, see comments)
+This is though not recomended since it takes quite a lot of time to run create_KPI_dataframe.py.
 
 Also download Excel-sheet `Gameweek_38.xlsx` from https://docs.google.com/spreadsheets/d/1bIpAxH0iWEot8tAlIQcvBB_uX-Au-qjX/edit?usp=sharing&ouid=117928085659621731785&rtpof=true&sd=true and place at one level above the Python code (see below).
 
