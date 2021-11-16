@@ -33,7 +33,7 @@ Download the folder 'Json_files' from https://drive.google.com/drive/folders/1Yh
     
     3. create_KPI_dataframe.py 
     
-    (4.) create_KPI_dataframe_EDIT.py (This code program might need some modifications to it, see comments)
+    (4.) create_KPI_dataframe_EDIT.py (need some modifications, see comments)
     
 This is though not recomended since it takes quite a lot of time to run create_KPI_dataframe.py.
 
