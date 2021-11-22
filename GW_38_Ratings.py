@@ -3,7 +3,7 @@
 """
 Created on Tue Sep 14 16:41:04 2021
 
-@author: emildanielsson % JakobEP
+@author: emildanielsson & JakobEP
 
 Program description: 
    Find ratings of all players in the last round.
